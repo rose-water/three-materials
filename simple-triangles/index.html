@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Three.js materials & shaders</title>
+  </head>
+  <body>
+    <div id="container"></div>
+
+    <!-- vertex shader -->
+    <script id="vertexShader" type="x-shader/x-vertex">
+      precision mediump float;
+      precision mediump int;
+      uniform mat4 modelViewMatrix;
+      uniform mat4 projectionMatrix;
+      attribute vec3 position;
+      attribute vec4 color;
+      varying vec3 vPosition;
+      varying vec4 vColor;
+
+      void main() {
+        vPosition = position;
+        vColor = color;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }
+    </script>
+
+    <!-- fragment shader -->
+    <script id="fragmentShader" type="x-shader/x-fragment">
+      precision mediump float;
+      precision mediump int;
+      uniform float time;
+      varying vec3 vPosition;
+      varying vec4 vColor;
+
+      void main() {
+        vec4 color = vec4(vColor);
+        color.r += sin(vPosition.z * 10.0 + time) * 0.9;
+        gl_FragColor = color;
+      }
+    </script>
+
+    <!-- scripts -->
+    <script src="../libs/three.js"></script>
+    <script src="sketch.js"></script>
+
+  </body>
+</html>

@@ -12,10 +12,6 @@ var FOV      = 2;
 var RES      = 8;
 var BGCOLOR  = 0x7070C0;
 
-var PI       = Math.PI;
-var TAU      = PI * 2;
-var sin      = Math.sin;
-var cos      = Math.cos;
 var ratio    = window.innerWidth / window.innerHeight;
 var lastTime = 0;
 

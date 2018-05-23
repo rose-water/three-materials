@@ -1,5 +1,11 @@
 // --------------------------------------------------------------
 // from https://codepen.io/rosewater/pen/NMoyGN?editors=0010
+// This is mostly around seeing the behavior for subdivision
+// and is missing all the shader stuff and post processing
+// with multi pass.
+//
+// To look through:
+// http://luxiyalu.com/render-post-processing-with-three-js/
 // --------------------------------------------------------------
 
 var FOV      = 2;

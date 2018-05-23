@@ -1,1 +1,1 @@
-Three.js materials/shaders/textures study
+Three.js study.

@@ -6,6 +6,8 @@
 //
 // To look through:
 // http://luxiyalu.com/render-post-processing-with-three-js/
+// https://stackoverflow.com/questions/34382340/
+// what-is-a-renderpass?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
 // --------------------------------------------------------------
 
 var FOV      = 2;

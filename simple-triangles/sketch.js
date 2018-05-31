@@ -11,7 +11,7 @@ animate();
 // -----------------------------------------------------
 function init() {
   container         = document.getElementById('container');
-  scene = new THREE.Scene();
+  scene             = new THREE.Scene();
   camera            = new THREE.PerspectiveCamera(20, window.innerWidth / window.innerHeight, 2, 50);
   camera.position.z = 2;
   let triangles     = 25;

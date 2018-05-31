@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Spiral Galaxy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+    <!-- Vertex Shader -->
+    <script id="vShader" type="x-vertex/x-shader">
+      uniform float size;
+      uniform float t;
+      uniform float z;
+      uniform float pixelRatio;
+
+      varying vec3 vPos;
+      varying vec3 modifiedPos;
+      varying float gas;
+
+      float a, b = 0.0;
+
+      void main() {
+        vPos = position;
+        a = length(position);
+
+        // leaving this out for now, as I don't quite know what it's doing
+        if (t > 0.0) {
+          b = max(0.0, (cos(a / 20.0 - t * 0.02) - 0.99) * 3.0 / a);
+        }
+        if (z > 0.0) {
+          b = max(0.0, cos(a / 40.0 - z * 0.01 + 2.0));
+        }
+
+        modifiedPos     = position * (1.0 + b * 4.0);
+        vec4 mvPosition = modelViewMatrix * vec4(modifiedPos, 1.0);
+        gl_Position     = mvPosition * projectionMatrix;
+
+        gas             = max(0.0, sin(-a / 20.0));
+
+        // gl_PointSize = size of rasterized points in pixels
+        gl_PointSize    = pixelRatio * size *(1.0 + gas *2.0) / length(mvPosition.xyz);
+      }
+    </script>
+
+    <!-- Fragment Shader -->
+    <script id="fShader" type="x-fragment/x-shader">
+      uniform float z;
+
+      varying vec3 vPos;
+      varying vec3 modifiedPos;
+      varying float gas;
+
+      void main() {
+        float a = distance(modifiedPos, vPos);
+        if (a > 0.0) {
+          a = 1.0;
+        }
+
+        float b        = max(0.32, 0.0065 * length(vPos));
+        float c        = distance(gl_PointCoord, vec2(0.5));
+        float starlook = -(c - 0.5) * 1.2 * gas;
+        float gaslook  = (1.0 - gas) / (c * 10.0);
+        float texture  = starlook + gaslook;
+
+        gl_FragColor = vec4(0.32, 0.28, b, 1.0) * texture * (1.0 - a * 0.35);
+
+        // leaving this out for now, not super necessary
+        if (z > 0.0) {
+          gl_FragColor *= cos(1.57 * z / 322.0) * texture * (1.0 - a * 0.35);
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="container"></div>
+
+    <!-- scripts -->
+    <script src="../libs/three.js"></script>
+    <script src="../libs/controls/TrackballControls.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.4/TweenMax.min.js'></script>
+    <script src="sketch.js"></script>
+
+  </body>
+</html>

@@ -51,10 +51,11 @@ function update() {
   var time = performance.now() * 0.0005;
 
   // reposition vertices
-  var k = 2.8;
+  var modifier1 = 0.8;
+  var modifier2 = 1.3;
   for (var i = 0; i < sphere.geometry.vertices.length; i++) {
     let vert = sphere.geometry.vertices[i];
-    vert.normalize().multiplyScalar(1 + 0.3 * noise.perlin3(vert.x * k + time, vert.y * k + time, vert.z * k));
+    vert.normalize().multiplyScalar(1 + modifier1 * noise.perlin3(vert.x * modifier2 + time, vert.y * modifier2 + time, vert.z * modifier2));
   }
 
   sphere.geometry.computeVertexNormals();
